@@ -1,0 +1,307 @@
+<html>
+<head>
+<title>Osmania University Results - 2024</title>
+<style>
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.popup-content {
+  background-color: #FAF0D8;
+  padding: 30px;
+  border-radius: 10px;
+  border: 3px solid #FF5722;
+  text-align: center;
+  max-width: 450px;
+  width: 90%;
+  box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+  transform: scale(0.5);
+  animation: zoomIn 0.6s 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  position: relative;
+  overflow: hidden;
+}
+
+.results-loading {
+  color: #FF5722;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 20px;
+  background-color: #f3f3f3;
+  border-radius: 10px;
+  border: 1px solid #FF5722;
+  overflow: hidden;
+  margin: 15px auto;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.progress-bar {
+  height: 100%;
+  width: 10%;
+  background: linear-gradient(45deg, #FF5722, #FF8A65, #FF5722);
+  background-size: 200% 200%;
+  animation: progress-animation 3s ease infinite, gradientBG 2s ease infinite;
+}
+
+@keyframes progress-animation {
+  0% { width: 10%; }
+  50% { width: 70%; }
+  70% { width: 80%; }
+  90% { width: 90%; }
+  100% { width: 95%; }
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.server-message {
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: #555;
+  text-align: left;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  padding: 8px;
+  margin: 10px 0;
+  max-height: 80px;
+  overflow: hidden;
+}
+
+.blinking-text {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.loading-dots:after {
+  content: '.';
+  animation: dots 1.5s steps(5, end) infinite;
+}
+
+@keyframes dots {
+  0%, 20% { content: '.'; }
+  40% { content: '..'; }
+  60% { content: '...'; }
+  80%, 100% { content: ''; }
+}
+
+@media screen and (max-width: 768px) {
+  .popup-content {
+    width: 85%;
+    max-width: none;
+    padding: 25px 15px;
+  }
+  
+  .popup-title {
+    font-size: 24px;
+  }
+  
+  .popup-message {
+    font-size: 16px;
+  }
+  
+  .popup-button {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .popup-content {
+    width: 90%;
+    padding: 30px 20px;
+  }
+  
+  .popup-title {
+    font-size: 22px;
+  }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.5); }
+  to { transform: scale(1); }
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  opacity: 0;
+  animation: confetti 5s ease-in-out infinite;
+}
+
+@keyframes confetti {
+  0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(400px) rotate(720deg); opacity: 0; }
+}
+
+.popup-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #FF5722;
+  margin-bottom: 15px;
+  animation: bounce 1s ease infinite;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+  font-family: Arial, sans-serif;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+  40% {transform: translateY(-20px);}
+  60% {transform: translateY(-10px);}
+}
+
+.popup-message {
+  font-size: 18px;
+  margin-bottom: 25px;
+  color: #333;
+  line-height: 1.5;
+  animation: slideIn 0.8s 0.5s both;
+  font-family: Verdana, sans-serif;
+}
+
+@keyframes slideIn {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.popup-button {
+  background-color: #FF5722;
+  color: white;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+  animation: pulse 2s infinite;
+  font-family: Arial, sans-serif;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.popup-button:hover {
+  background-color: #E64A19;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+}
+
+.emoji {
+  font-size: 40px;
+  display: inline-block;
+  margin: 0 5px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.jester-hat {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  font-size: 70px;
+  transform: rotate(30deg);
+  animation: wiggle 2s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(30deg); }
+  50% { transform: rotate(40deg); }
+}
+</style>
+<script src="script.js"></script>
+</head> 
+
+<body bgcolor="#FAF0D8" bgcolor="#FAF0D8" topmargin="0" leftmargin="0" >  
+<form method=post action="javascript:void(0)" name=FrontPage_Form1 onsubmit="return FrontPage_Form1_Validator(this)">  
+<input type="hidden" name="mbstatus" value="SEARCH"> 
+
+<div align="center">
+<center>
+<table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" width="90%" id="AutoNumber1">  
+  <tr><td width="100%"> 
+    <p align="center"><font face="Arial" size="2"><b> BE AICTE Sem-I (Regular & supply) CBCS Feb 2025 examination results </b></font></td></tr>   
+  <tr><td width="100%">  <p align="right"><font face="Arial" size="1">01-Apr-2025 </font></td>  </tr>
+
+  
+
+
+<tr> <td width="100%"> <div align="center"> <center>
+   <table border="1" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" width="80%" id="AutoNumber6" height="19">
+    <tr> <td width="100%" align="center" height="16" bgcolor="#FEFCF5"><b>
+         <font face="Arial" size="2">Enter  Hall Ticket No. :  
+         <input type="text" name="htno" size="15" maxlength="12" value="">
+         <input type="image" name="Submit" value="Go" src="https://i.ibb.co/gM3qQhf3/gobut.gif">
+         </font> </b></td>
+    </tr>
+
+    <tr><td width="100%" align="center">
+        <font face="verdana" size="2" color="#FF0000"><b> Please Enter  12 Digit Hall Ticket Number
+        Ex: 245324748301,  245324733069.  </b></font></td>
+    </tr>
+    </table>  </center>  </div>  </td>
+  </tr>
+
+  </table>  </div> </form>
+</body>
+
+<div id="popupOverlay" class="popup-overlay">
+  <div id="popupContent" class="popup-content">
+    <div id="loadingContent">
+      <div class="results-loading">Osmania University Results Portal</div>
+      <div class="progress-bar-container">
+        <div class="progress-bar"></div>
+      </div>
+      <div class="server-message">
+        <div>Connecting to results server <span class="loading-dots"></span></div>
+        <div>Authenticating user request <span class="loading-dots"></span></div>
+        <div>Fetching database records <span class="loading-dots"></span></div>
+        <div>Processing results <span class="blinking-text">█</span></div>
+      </div>
+      <div class="popup-message" style="font-family: Arial, sans-serif; color: #555; font-size: 14px;">
+        Please wait while we retrieve your examination results
+      </div>
+    </div>
+    
+    <div id="aprilFoolContent" style="display: none;">
+      <div class="jester-hat">🎭</div>
+      <div class="popup-title">APRIL FOOL'S DAY! 🤪<span class="emoji"></span></div>
+      <div id="popupMessage" class="popup-message">Osmania University Results are yet to be announced.</div>
+      <button id="closeButton" class="popup-button" onclick="closePopup();">Got it!</button>
+    </div>
+  </div>
+</div>
+</html>
+
